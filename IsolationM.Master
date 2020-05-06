@@ -1,0 +1,66 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="IsolationM.master.cs" Inherits="Assignment1.Net.IsolationM" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title><%: Page.Title %></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/Site.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&display=swap" rel="stylesheet"> 
+
+    <asp:ContentPlaceHolder ID="CPhead" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server" class="container-fluid">
+            <header></header>
+
+            <nav class="navbar sticky-top navbar-expand-md " id="stickyNav">
+              <a class="navbar-brand" href="IsolationW1.aspx" id="logoEdit">Made By Charles</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"
+                  aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="IsolationW1.aspx">Traditional</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="IsolationW2.aspx">Model</a>
+                  </li>
+                  <li class="nav-item">
+                    <asp:HyperLink runat="server" CssClass="nav-link" ID="mvcLink" >MVC</asp:HyperLink>
+                  </li>    
+                </ul>
+                  <div class="navbar-nav" id="searchbtn">
+            
+                      <asp:DropDownList ID="tbDrop" runat="server" CssClass="form-control mr-sm-2">
+                      </asp:DropDownList>
+                     
+                      <button class="searchButton" type="submit" style="background-color: #f1bb4e">Search</button>
+                  </div>
+              </div>  
+            </nav>
+            <main>
+                <asp:ContentPlaceHolder ID="CPBody" runat="server"></asp:ContentPlaceHolder>
+            </main>
+            <footer class="text-center">
+               <hr />
+                &copy; 2020 Charles's Ideas
+            </footer>
+        </form>
+
+
+    <script src="/Scripts/jquery-3.4.1.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/popper.min.js"></script>
+    <script src="/Scripts/custom.js"></script>
+
+
+    <asp:ContentPlaceHolder ID="CPScript" runat="server"></asp:ContentPlaceHolder>
+</body>
+</html>
