@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FunIdeasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Idea">
+          <Key>
+            <PropertyRef Name="ideaID" />
+          </Key>
+          <Property Name="ideaID" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="30" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="categoryID" Type="int" Nullable="false" />
+          <Property Name="imageID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="imageID" />
+          </Key>
+          <Property Name="imageID" Type="int" Nullable="false" />
+          <Property Name="thumbnail" Type="varchar(max)" />
+          <Property Name="nImage" Type="varchar(max)" />
+          <Property Name="alternateText" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Idea_category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Idea" Type="Self.Idea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="Idea">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Idea_image">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Idea" Type="Self.Idea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="imageID" />
+            </Principal>
+            <Dependent Role="Idea">
+              <PropertyRef Name="imageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FunIdeasModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Idea" EntityType="Self.Idea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Idea_category" Association="Self.FK_Idea_category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Idea" EntitySet="Idea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Idea_image" Association="Self.FK_Idea_image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Idea" EntitySet="Idea" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FunIdeasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ideas" Relationship="Self.FK_Idea_category" FromRole="Category" ToRole="Idea" a:GetterAccess="Internal" />
+        </EntityType>
+        <EntityType Name="Idea">
+          <Key>
+            <PropertyRef Name="ideaID" />
+          </Key>
+          <Property Name="ideaID" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="categoryID" Type="Int32" Nullable="false" />
+          <Property Name="imageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Idea_category" FromRole="Idea" ToRole="Category" />
+          <NavigationProperty Name="Image" Relationship="Self.FK_Idea_image" FromRole="Idea" ToRole="Image" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="imageID" />
+          </Key>
+          <Property Name="imageID" Type="Int32" Nullable="false" />
+          <Property Name="thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alternateText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ideas" Relationship="Self.FK_Idea_image" FromRole="Image" ToRole="Idea" />
+        </EntityType>
+        <Association Name="FK_Idea_category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Idea" Type="Self.Idea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="Idea">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Idea_image">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Idea" Type="Self.Idea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="imageID" />
+            </Principal>
+            <Dependent Role="Idea">
+              <PropertyRef Name="imageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FunIdeasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <EntitySet Name="Ideas" EntityType="Self.Idea" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <AssociationSet Name="FK_Idea_category" Association="Self.FK_Idea_category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Idea" EntitySet="Ideas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Idea_image" Association="Self.FK_Idea_image">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="Idea" EntitySet="Ideas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FunIdeasModelStoreContainer" CdmEntityContainer="FunIdeasEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="FunIdeasModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ideas">
+            <EntityTypeMapping TypeName="FunIdeasModel.Idea">
+              <MappingFragment StoreEntitySet="Idea">
+                <ScalarProperty Name="ideaID" ColumnName="ideaID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="imageID" ColumnName="imageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="FunIdeasModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="imageID" ColumnName="imageID" />
+                <ScalarProperty Name="thumbnail" ColumnName="thumbnail" />
+                <ScalarProperty Name="nImage" ColumnName="nImage" />
+                <ScalarProperty Name="alternateText" ColumnName="alternateText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
