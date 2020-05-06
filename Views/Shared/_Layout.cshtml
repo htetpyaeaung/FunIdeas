@@ -1,0 +1,76 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/Site.css")
+
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body>
+    <form id="mvcForm" class="container-fluid" action="Index" method="get" target="_blank">
+        <nav class="navbar sticky-top navbar-expand-md">
+            @Html.ActionLink("Made By Charles", "Index", "Home", new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"
+                    aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @Html.ActionLink("Traditional", "NavigateTraditional", "Home", new { @class = "linkChg"})
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Model", "NavigateModel", "Home", new { @class = "linkChg" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("MVC", "Index", "Home", new { @class = "linkChg" })
+                    </li>
+                </ul>
+                <div class="navbar-nav" id="searchbtn" >
+
+                    <select id="cateID" name="cateID"><option value="">Select Category</option></select>
+                    <button class="searchButton" type="submit" style="background-color: #f1bb4e">Search</button>
+
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid body-content">
+            @RenderBody()
+            <hr />
+            <footer id="creditFoot">
+                <p>&copy; @DateTime.Now.Year Charles's Ideas</p>
+            </footer>
+        </div>
+    </form>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom.js")"></script>
+    <script>
+        var $request = $.ajax({
+            url: '/api/CategoriesWebAPI/',
+            method: 'GET',
+            timeout: 10000
+        });
+
+        $request.done(function (response) {
+            // [{},{},{}]
+            $.each(response, function (i, obj) {
+                $('<option>').val(obj.categoryID).text(obj.name).appendTo('#cateID');
+            })
+        })
+
+        $.fail(function () {
+            alert('error');
+        })
+    </script>
+</body>
+</html>
